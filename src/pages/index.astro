@@ -12,427 +12,662 @@
       content="Private acquisition of coastal homes, estates, and legacy properties. Respectful conversations, flexible timing, and thoughtful transitions."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 
     <style is:inline>
       :root {
-        --navy: #13243a;
-        --navy-2: #1d3048;
-        --cream: #f7f2e8;
-        --paper: #fbf8f1;
-        --linen: #ebe2d3;
-        --gold: #c8ad73;
-        --gold-dark: #a88747;
-        --ink: #182638;
-        --muted: #68706a;
-        --line: rgba(24, 38, 56, 0.14);
-        --shadow: 0 28px 90px rgba(19, 36, 58, 0.16);
+        --navy:        #0f1e2e;
+        --navy-mid:    #162538;
+        --navy-light:  #1d3048;
+        --cream:       #f5f0e8;
+        --paper:       #faf7f2;
+        --linen:       #ede5d6;
+        --linen-dark:  #e0d5c2;
+        --gold:        #c2a46a;
+        --gold-light:  #d4b87e;
+        --gold-dark:   #9e7f42;
+        --ink:         #0f1e2e;
+        --muted:       #5c6460;
+        --muted-light: #8a918e;
+        --line:        rgba(15, 30, 46, 0.11);
+        --line-gold:   rgba(194, 164, 106, 0.32);
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      *, *::before, *::after { box-sizing: border-box; }
 
-      html {
-        scroll-behavior: smooth;
-      }
+      html { scroll-behavior: smooth; }
 
       body {
         margin: 0;
         background: var(--paper);
         color: var(--ink);
-        font-family: Georgia, "Times New Roman", serif;
+        font-family: 'Jost', sans-serif;
+        font-weight: 300;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
+        overflow-x: hidden;
       }
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+      a { color: inherit; text-decoration: none; }
+
+      /* ─── HEADER ─────────────────────────────────────────── */
 
       .site-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 5;
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: min(1180px, calc(100% - 48px));
-        margin: 0 auto;
-        padding: 34px 0;
-        color: white;
+        padding: 0 clamp(24px, 5vw, 60px);
+        height: 72px;
+        transition: background 400ms ease, backdrop-filter 400ms ease, border-color 400ms ease;
+        border-bottom: 1px solid transparent;
+      }
+
+      .site-header.scrolled {
+        background: rgba(15, 30, 46, 0.96);
+        backdrop-filter: blur(12px);
+        border-color: rgba(194, 164, 106, 0.18);
       }
 
       .brand {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
       }
 
       .monogram {
         display: grid;
         place-items: center;
-        width: 38px;
-        height: 38px;
-        border: 1px solid rgba(200, 173, 115, 0.72);
+        width: 36px; height: 36px;
+        border: 1px solid var(--line-gold);
         color: var(--gold);
-        font-size: 20px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 21px;
+        font-weight: 300;
         line-height: 1;
+        flex-shrink: 0;
       }
 
       .brand-name {
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.24em;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.28em;
         text-transform: uppercase;
+        color: white;
       }
 
       .header-note {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.78);
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        color: rgba(255,255,255,0.55);
+        text-transform: uppercase;
       }
 
+      /* ─── HERO ───────────────────────────────────────────── */
+
       .hero {
-        min-height: 760px;
+        min-height: 100svh;
         position: relative;
         overflow: hidden;
         color: white;
-        background:
-          radial-gradient(circle at 82% 18%, rgba(200, 173, 115, 0.18), transparent 28%),
-          linear-gradient(135deg, rgba(19, 36, 58, 0.98), rgba(19, 36, 58, 0.94) 52%, rgba(29, 48, 72, 0.9));
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
       }
 
-      .hero::before {
-        content: "";
+      .hero-bg {
         position: absolute;
         inset: 0;
         background:
-          linear-gradient(90deg, rgba(19, 36, 58, 0.96), rgba(19, 36, 58, 0.72) 58%, rgba(19, 36, 58, 0.48)),
-          url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85");
-        background-size: cover;
-        background-position: center;
-        opacity: 0.42;
-        filter: saturate(0.82) contrast(0.95);
+          url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85")
+          center / cover no-repeat;
+        transform: scale(1.04);
+        animation: heroZoom 18s ease-out forwards;
+      }
+
+      @keyframes heroZoom {
+        to { transform: scale(1); }
+      }
+
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to top, rgba(10,20,32,0.95) 0%, rgba(10,20,32,0.6) 50%, rgba(10,20,32,0.28) 100%),
+          linear-gradient(105deg, rgba(10,20,32,0.75) 0%, transparent 55%);
+      }
+
+      /* Subtle grain */
+      .hero-overlay::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        opacity: 0.35;
+        pointer-events: none;
       }
 
       .hero-inner {
         position: relative;
         z-index: 2;
-        width: min(1180px, calc(100% - 48px));
+        width: min(1220px, calc(100% - clamp(48px, 10vw, 120px)));
         margin: 0 auto;
-        padding: 190px 0 150px;
+        padding-bottom: clamp(80px, 10vh, 130px);
+        padding-top: 120px;
       }
 
-      .eyebrow,
-      .section-label,
-      .step-label,
-      .num {
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
         color: var(--gold);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.22em;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.26em;
         text-transform: uppercase;
+        margin-bottom: 32px;
+        opacity: 0;
+        animation: fadeUp 0.9s 0.2s ease forwards;
       }
 
-      h1,
-      h2,
-      h3,
-      p {
-        margin-top: 0;
+      .eyebrow::before {
+        content: '';
+        display: block;
+        width: 32px; height: 1px;
+        background: var(--gold);
+        opacity: 0.6;
       }
 
       h1 {
-        max-width: 920px;
-        margin: 24px 0 28px;
-        font-size: clamp(52px, 7vw, 88px);
-        line-height: 0.96;
-        letter-spacing: -0.055em;
-        font-weight: 400;
+        max-width: 980px;
+        margin: 0 0 36px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(52px, 7.5vw, 104px);
+        font-weight: 300;
+        line-height: 0.94;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        animation: fadeUp 1s 0.4s ease forwards;
+      }
+
+      h1 em {
+        font-style: italic;
+        color: rgba(255,255,255,0.82);
       }
 
       .hero-copy {
-        max-width: 680px;
+        max-width: 560px;
         margin: 0;
-        color: rgba(255, 255, 255, 0.88);
-        font-size: clamp(19px, 2vw, 23px);
-        line-height: 1.68;
+        color: rgba(255,255,255,0.72);
+        font-size: clamp(16px, 1.5vw, 19px);
+        line-height: 1.8;
+        font-weight: 300;
+        opacity: 0;
+        animation: fadeUp 1s 0.6s ease forwards;
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 14px;
-        margin-top: 38px;
+        margin-top: 44px;
+        opacity: 0;
+        animation: fadeUp 1s 0.8s ease forwards;
       }
 
-      .button {
+      .btn {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        min-height: 52px;
-        padding: 15px 26px;
-        font-size: 14px;
-        letter-spacing: 0.035em;
-        transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+        gap: 10px;
+        font-family: 'Jost', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 16px 30px;
+        transition: all 220ms ease;
+        cursor: pointer;
       }
 
-      .button:hover {
-        transform: translateY(-1px);
-      }
-
-      .button-primary {
+      .btn-primary {
         background: var(--gold);
         color: var(--navy);
       }
 
-      .button-secondary {
-        border: 1px solid rgba(255, 255, 255, 0.38);
-        color: white;
+      .btn-primary:hover {
+        background: var(--gold-light);
+        transform: translateY(-2px);
       }
 
+      .btn-ghost {
+        border: 1px solid rgba(255,255,255,0.3);
+        color: rgba(255,255,255,0.9);
+      }
+
+      .btn-ghost:hover {
+        border-color: rgba(255,255,255,0.6);
+        transform: translateY(-2px);
+      }
+
+      .btn svg {
+        width: 14px; height: 14px;
+        transition: transform 200ms ease;
+      }
+
+      .btn:hover svg { transform: translateX(3px); }
+
+      /* ─── COMMITMENTS STRIP ──────────────────────────────── */
+
       .commitments {
-        position: relative;
-        z-index: 3;
-        width: min(1180px, calc(100% - 48px));
-        margin: -72px auto 0;
-        background: var(--paper);
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(200, 173, 115, 0.28);
+        background: var(--navy);
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid rgba(194,164,106,0.2);
       }
 
       .commitment {
-        padding: 34px 36px;
-        border-right: 1px solid var(--line);
+        padding: clamp(28px, 4vw, 48px) clamp(28px, 4vw, 52px);
+        border-right: 1px solid rgba(255,255,255,0.07);
+        position: relative;
+        overflow: hidden;
+        transition: background 300ms ease;
       }
 
-      .commitment:last-child {
-        border-right: 0;
+      .commitment::before {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 2px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 350ms ease;
       }
 
-      .commitment strong {
+      .commitment:hover::before { transform: scaleX(1); }
+
+      .commitment:last-child { border-right: 0; }
+
+      .commitment-title {
         display: block;
-        margin-bottom: 10px;
-        color: var(--navy);
-        font-size: 22px;
+        margin-bottom: 12px;
+        color: white;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 26px;
         font-weight: 400;
+        letter-spacing: 0.01em;
       }
 
-      .commitment span {
+      .commitment-body {
         display: block;
-        color: var(--muted);
-        font-size: 16px;
-        line-height: 1.6;
+        color: rgba(255,255,255,0.5);
+        font-size: 15px;
+        line-height: 1.7;
+        font-weight: 300;
       }
 
-      .section {
-        padding: 112px 0;
-      }
+      /* ─── SECTIONS ───────────────────────────────────────── */
 
+      .section { padding: clamp(80px, 10vw, 140px) 0; }
       .section-inner {
-        width: min(1180px, calc(100% - 48px));
+        width: min(1220px, calc(100% - clamp(48px, 10vw, 120px)));
         margin: 0 auto;
       }
 
-      .split {
-        display: grid;
-        grid-template-columns: 0.92fr 1.08fr;
-        gap: clamp(46px, 8vw, 110px);
-        align-items: start;
+      .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--gold-dark);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+      }
+
+      .section-label::before {
+        content: '';
+        display: block;
+        width: 24px; height: 1px;
+        background: var(--gold-dark);
       }
 
       h2 {
-        margin: 18px 0 0;
+        margin: 0;
         color: var(--navy);
-        font-size: clamp(36px, 4.6vw, 60px);
-        line-height: 1.06;
-        letter-spacing: -0.042em;
-        font-weight: 400;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(40px, 5vw, 72px);
+        font-weight: 300;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
       }
+
+      h2 em {
+        font-style: italic;
+        color: var(--muted);
+      }
+
+      /* ─── PHILOSOPHY SPLIT ───────────────────────────────── */
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: clamp(48px, 8vw, 120px);
+        align-items: start;
+      }
+
+      .split-left { position: sticky; top: 100px; }
 
       .body-copy p {
-        margin-bottom: 24px;
+        margin: 0 0 26px;
         color: var(--muted);
-        font-size: 20px;
-        line-height: 1.78;
+        font-size: clamp(17px, 1.6vw, 20px);
+        line-height: 1.85;
+        font-weight: 300;
       }
 
-      .linen {
-        background: var(--linen);
-      }
+      .body-copy p:last-child { margin-bottom: 0; }
 
-      .section-heading {
-        max-width: 780px;
-      }
+      /* ─── CARDS ──────────────────────────────────────────── */
+
+      .linen-section { background: var(--linen); }
 
       .cards {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 26px;
-        margin-top: 54px;
+        gap: 2px;
+        margin-top: 64px;
+        background: var(--linen-dark);
+        border: 1px solid var(--linen-dark);
       }
 
       .card {
         background: var(--paper);
-        border: 1px solid var(--line);
-        padding: 40px 36px;
-        min-height: 286px;
+        padding: clamp(32px, 4vw, 52px) clamp(28px, 3.5vw, 46px);
+        position: relative;
+        transition: background 300ms ease;
       }
 
-      .num {
+      .card:hover { background: #fff; }
+
+      .card-num {
         display: block;
-        margin-bottom: 28px;
+        margin-bottom: 32px;
+        color: var(--gold);
         font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.22em;
       }
 
       h3 {
-        margin-bottom: 18px;
+        margin: 0 0 18px;
         color: var(--navy);
-        font-size: 29px;
-        line-height: 1.16;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(26px, 2.5vw, 34px);
         font-weight: 400;
+        line-height: 1.15;
       }
 
       .card p {
         margin: 0;
         color: var(--muted);
-        font-size: 17px;
-        line-height: 1.72;
+        font-size: 16px;
+        line-height: 1.78;
+        font-weight: 300;
       }
 
+      /* ─── PROCESS ────────────────────────────────────────── */
+
       .process-list {
-        border-top: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
       }
 
       .process-step {
         display: grid;
-        grid-template-columns: 145px 1fr;
-        gap: 30px;
-        padding: 34px 0;
+        grid-template-columns: 110px 1fr;
+        gap: 24px;
+        padding: 38px 0;
         border-bottom: 1px solid var(--line);
+        align-items: start;
+        position: relative;
       }
 
-      .process-step p {
+      .process-step:first-child {
+        border-top: 1px solid var(--line);
+      }
+
+      .step-ordinal {
+        color: var(--gold);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding-top: 4px;
+      }
+
+      .step-body p {
         margin: 0;
         color: var(--muted);
-        font-size: 19px;
-        line-height: 1.7;
+        font-size: clamp(16px, 1.5vw, 19px);
+        line-height: 1.78;
+        font-weight: 300;
       }
+
+      /* ─── STATEMENT ──────────────────────────────────────── */
 
       .statement {
         background: var(--navy);
         color: white;
+        padding: clamp(80px, 12vw, 160px) clamp(24px, 5vw, 60px);
+        position: relative;
+        overflow: hidden;
         text-align: center;
-        padding: 112px 24px;
       }
 
-      .statement p {
-        max-width: 1040px;
-        margin: 0 auto;
-        font-size: clamp(32px, 4.4vw, 56px);
-        line-height: 1.22;
-        letter-spacing: -0.04em;
+      .statement::before {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px; height: 700px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(194,164,106,0.07) 0%, transparent 70%);
+        pointer-events: none;
+      }
+
+      .statement-line {
+        display: block;
+        width: 1px;
+        height: 56px;
+        background: linear-gradient(to bottom, transparent, var(--gold-dark));
+        margin: 0 auto 40px;
+      }
+
+      .statement blockquote {
+        margin: 0;
+        padding: 0;
+        max-width: 960px;
+        margin-inline: auto;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(32px, 4.5vw, 62px);
+        font-weight: 300;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        font-style: italic;
+        color: rgba(255,255,255,0.92);
+      }
+
+      /* ─── CONTACT ────────────────────────────────────────── */
+
+      .contact-split {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: clamp(48px, 8vw, 120px);
+        align-items: start;
+      }
+
+      .contact-left { position: sticky; top: 100px; }
+
+      .contact-panel {
+        background: var(--navy);
+        padding: clamp(40px, 5vw, 64px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact-panel::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), transparent);
+      }
+
+      .contact-panel p {
+        color: rgba(255,255,255,0.6);
+        font-size: clamp(16px, 1.5vw, 19px);
+        line-height: 1.8;
+        font-weight: 300;
+        margin: 0 0 32px;
+      }
+
+      .contact-email-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding-top: 28px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .contact-email-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .contact-email-link {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(22px, 2.4vw, 32px);
         font-weight: 400;
+        color: white;
+        letter-spacing: -0.01em;
+        transition: color 200ms ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
       }
 
-      .contact-card {
-        background: var(--linen);
-        border: 1px solid var(--line);
-        padding: 46px;
+      .contact-email-link:hover { color: var(--gold-light); }
+
+      .contact-email-link svg {
+        width: 20px; height: 20px;
+        opacity: 0.5;
+        transition: opacity 200ms ease, transform 200ms ease;
       }
 
-      .contact-card p {
-        color: var(--muted);
-        font-size: 20px;
-        line-height: 1.72;
+      .contact-email-link:hover svg {
+        opacity: 1;
+        transform: translate(3px, -3px);
       }
 
-      .email-link {
-        color: var(--navy);
-        border-bottom: 1px solid var(--gold-dark);
-      }
+      /* ─── FOOTER ─────────────────────────────────────────── */
 
       .site-footer {
         background: var(--navy);
-        color: rgba(255, 255, 255, 0.66);
-        font-size: 14px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        color: rgba(255,255,255,0.36);
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: 0.03em;
       }
 
       .footer-inner {
-        width: min(1180px, calc(100% - 48px));
+        width: min(1220px, calc(100% - clamp(48px, 10vw, 120px)));
         margin: 0 auto;
-        padding: 32px 0;
+        padding: 28px 0;
         display: flex;
         justify-content: space-between;
         gap: 24px;
+        align-items: center;
       }
 
-      @media (max-width: 900px) {
-        .site-header {
-          align-items: flex-start;
-          flex-direction: column;
-          gap: 16px;
-        }
+      .footer-mark {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: rgba(255,255,255,0.5);
+      }
 
-        .hero {
-          min-height: auto;
-        }
+      .footer-dot {
+        width: 3px; height: 3px;
+        border-radius: 50%;
+        background: var(--gold);
+        opacity: 0.5;
+      }
 
-        .hero-inner {
-          padding: 170px 0 116px;
-        }
+      /* ─── REVEAL ANIMATIONS ──────────────────────────────── */
 
-        .commitments,
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(22px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.22s; }
+      .reveal-delay-3 { transition-delay: 0.34s; }
+
+      /* ─── RESPONSIVE ─────────────────────────────────────── */
+
+      @media (max-width: 960px) {
         .split,
-        .cards,
-        .process-step {
-          grid-template-columns: 1fr;
-        }
-
-        .commitment {
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
-        }
-
-        .commitment:last-child {
-          border-bottom: 0;
-        }
-
-        .section {
-          padding: 82px 0;
-        }
-
-        .footer-inner {
-          flex-direction: column;
-        }
+        .contact-split { grid-template-columns: 1fr; }
+        .split-left,
+        .contact-left { position: static; }
+        .cards { grid-template-columns: 1fr 1fr; }
       }
 
-      @media (max-width: 560px) {
-        .brand-name {
-          letter-spacing: 0.17em;
-        }
+      @media (max-width: 700px) {
+        .commitments { grid-template-columns: 1fr; }
+        .commitment { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .commitment:last-child { border-bottom: 0; }
+        .cards { grid-template-columns: 1fr; }
+        .process-step { grid-template-columns: 80px 1fr; }
+        .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+      }
 
-        h1 {
-          font-size: 46px;
-        }
-
-        .hero-actions {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .button {
-          width: 100%;
-        }
+      @media (max-width: 480px) {
+        .hero-actions { flex-direction: column; }
+        .btn { width: 100%; justify-content: center; }
+        .site-header { padding: 0 24px; }
       }
     </style>
   </head>
 
   <body>
-    <header class="site-header">
+
+    <!-- HEADER -->
+    <header class="site-header" id="site-header">
       <a class="brand" href="/" aria-label="Heritage Coastal home">
         <span class="monogram">H</span>
         <span class="brand-name">Heritage Coastal</span>
@@ -441,137 +676,196 @@
     </header>
 
     <main>
+
+      <!-- HERO -->
       <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
         <div class="hero-inner">
           <div class="eyebrow">Stewardship · Continuity · Respect</div>
-          <h1>A thoughtful path for owners considering the future of a cherished property.</h1>
+          <h1>A thoughtful path for owners<br>considering <em>the future</em><br>of a cherished property.</h1>
           <p class="hero-copy">
             Heritage Coastal works directly with homeowners, families, and estates seeking a private, respectful, and dignified transition of coastal real estate.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="mailto:info@heritagecoastal.com">Start a Private Conversation</a>
-            <a class="button button-secondary" href="#approach">Our Approach</a>
+            <a class="btn btn-primary" href="mailto:info@heritagecoastal.com">
+              Start a Private Conversation
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#approach">
+              Our Approach
+            </a>
           </div>
         </div>
       </section>
 
-      <section class="commitments" aria-label="Heritage Coastal commitments">
-        <div class="commitment">
-          <strong>Private</strong>
-          <span>Quiet conversations without public listings, open houses, or neighborhood speculation.</span>
+      <!-- COMMITMENTS -->
+      <div class="commitments" aria-label="Heritage Coastal commitments">
+        <div class="commitment reveal">
+          <span class="commitment-title">Private</span>
+          <span class="commitment-body">Quiet conversations without public listings, open houses, or neighborhood speculation.</span>
         </div>
-        <div class="commitment">
-          <strong>Patient</strong>
-          <span>Flexible timing for families, estates, and owners who need room to decide carefully.</span>
+        <div class="commitment reveal reveal-delay-1">
+          <span class="commitment-title">Patient</span>
+          <span class="commitment-body">Flexible timing for families, estates, and owners who need room to decide carefully.</span>
         </div>
-        <div class="commitment">
-          <strong>Direct</strong>
-          <span>Clear proposals, straightforward terms, and conversations with decision-makers.</span>
+        <div class="commitment reveal reveal-delay-2">
+          <span class="commitment-title">Direct</span>
+          <span class="commitment-body">Clear proposals, straightforward terms, and conversations with decision-makers.</span>
         </div>
-      </section>
+      </div>
 
+      <!-- PHILOSOPHY -->
       <section class="section" id="approach">
-        <div class="section-inner split">
-          <div>
-            <div class="section-label">Our Philosophy</div>
-            <h2>Properties deserve more than a transaction.</h2>
-          </div>
-          <div class="body-copy">
-            <p>
-              Many homes represent decades of care, family history, and personal investment. Decisions involving those properties deserve patience and respect.
-            </p>
-            <p>
-              We provide a direct path for owners who may be ready to sell, but do not want pressure, public exposure, repeated showings, or unnecessary complexity.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section linen">
         <div class="section-inner">
-          <div class="section-heading">
+          <div class="split">
+            <div class="split-left reveal">
+              <div class="section-label">Our Philosophy</div>
+              <h2>Properties deserve more than<br><em>a transaction.</em></h2>
+            </div>
+            <div class="body-copy reveal reveal-delay-1">
+              <p>
+                Many homes represent decades of care, family history, and personal investment. Decisions involving those properties deserve patience and respect.
+              </p>
+              <p>
+                We provide a direct path for owners who may be ready to sell, but do not want pressure, public exposure, repeated showings, or unnecessary complexity.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARDS -->
+      <section class="section linen-section">
+        <div class="section-inner">
+          <div class="reveal">
             <div class="section-label">Why Owners Work With Us</div>
-            <h2>Quiet, direct, and considerate.</h2>
+            <h2>Quiet, direct,<br><em>and considerate.</em></h2>
           </div>
-
           <div class="cards">
-            <article class="card">
-              <span class="num">01</span>
+            <article class="card reveal reveal-delay-1">
+              <span class="card-num">01</span>
               <h3>Respect for the owner</h3>
-              <p>
-                We move at a pace that suits the family, not the market. No hard sell. No manufactured urgency. No public pressure.
-              </p>
+              <p>We move at a pace that suits the family, not the market. No hard sell. No manufactured urgency. No public pressure.</p>
             </article>
-
-            <article class="card">
-              <span class="num">02</span>
+            <article class="card reveal reveal-delay-2">
+              <span class="card-num">02</span>
               <h3>Respect for the property</h3>
-              <p>
-                Every property has a story. We take time to understand its history, condition, setting, and the owner’s hopes for what comes next.
-              </p>
+              <p>Every property has a story. We take time to understand its history, condition, setting, and the owner's hopes for what comes next.</p>
             </article>
-
-            <article class="card">
-              <span class="num">03</span>
+            <article class="card reveal reveal-delay-3">
+              <span class="card-num">03</span>
               <h3>Respect for privacy</h3>
-              <p>
-                Conversations remain private. Options can be discussed quietly, without listing, staging, repeated showings, or speculation.
-              </p>
+              <p>Conversations remain private. Options can be discussed quietly, without listing, staging, repeated showings, or speculation.</p>
             </article>
           </div>
         </div>
       </section>
 
+      <!-- PROCESS -->
       <section class="section">
-        <div class="section-inner split">
-          <div>
-            <div class="section-label">How It Works</div>
-            <h2>A simpler alternative to a public sale.</h2>
-          </div>
-          <div class="process-list">
-            <div class="process-step">
-              <div class="step-label">First</div>
-              <p>We have a private conversation to understand the property, the timing, and whether a direct transaction may be appropriate.</p>
+        <div class="section-inner">
+          <div class="split">
+            <div class="split-left reveal">
+              <div class="section-label">How It Works</div>
+              <h2>A simpler<br>alternative to<br><em>a public sale.</em></h2>
             </div>
-            <div class="process-step">
-              <div class="step-label">Second</div>
-              <p>If there is mutual interest, we review the property carefully and provide a clear proposal without requiring repairs, staging, or open houses.</p>
-            </div>
-            <div class="process-step">
-              <div class="step-label">Third</div>
-              <p>The owner chooses the path and timing. We can accommodate flexible closing dates, estate situations, family transitions, and as-is sales.</p>
+            <div class="process-list reveal reveal-delay-1">
+              <div class="process-step">
+                <div class="step-ordinal">First</div>
+                <div class="step-body">
+                  <p>We have a private conversation to understand the property, the timing, and whether a direct transaction may be appropriate.</p>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-ordinal">Second</div>
+                <div class="step-body">
+                  <p>If there is mutual interest, we review the property carefully and provide a clear proposal without requiring repairs, staging, or open houses.</p>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-ordinal">Third</div>
+                <div class="step-body">
+                  <p>The owner chooses the path and timing. We can accommodate flexible closing dates, estate situations, family transitions, and as-is sales.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- STATEMENT -->
       <section class="statement">
-        <p>We believe the best property transitions are built on trust, clarity, and mutual respect.</p>
+        <span class="statement-line" aria-hidden="true"></span>
+        <blockquote class="reveal">
+          We believe the best property transitions are built on trust, clarity, and mutual respect.
+        </blockquote>
       </section>
 
+      <!-- CONTACT -->
       <section class="section">
-        <div class="section-inner split">
-          <div>
-            <div class="section-label">Contact</div>
-            <h2>Begin with a private conversation.</h2>
-          </div>
-          <div class="contact-card">
-            <p>
-              Whether you are considering a sale, managing an estate, or planning for the future of a family property, we welcome a confidential discussion.
-            </p>
-            <p>
-              Email: <a class="email-link" href="mailto:info@heritagecoastal.com">info@heritagecoastal.com</a>
-            </p>
+        <div class="section-inner">
+          <div class="contact-split">
+            <div class="contact-left reveal">
+              <div class="section-label">Contact</div>
+              <h2>Begin with a<br>private<br><em>conversation.</em></h2>
+            </div>
+            <div class="contact-panel reveal reveal-delay-1">
+              <p>
+                Whether you are considering a sale, managing an estate, or planning for the future of a family property, we welcome a confidential discussion. There is no obligation, no pressure, and no public record of our conversation.
+              </p>
+              <div class="contact-email-wrap">
+                <span class="contact-email-label">Write to us</span>
+                <a class="contact-email-link" href="mailto:info@heritagecoastal.com">
+                  info@heritagecoastal.com
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <path d="M5 15L15 5M15 5H7M15 5v8"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
       <div class="footer-inner">
-        <div>© 2026 Heritage Coastal</div>
+        <div class="footer-mark">
+          <span>© 2026 Heritage Coastal</span>
+          <span class="footer-dot"></span>
+          <span>All rights reserved</span>
+        </div>
         <div>Private acquisition of coastal homes and legacy properties</div>
       </div>
     </footer>
+
+    <script is:inline>
+      // Header scroll state
+      const header = document.getElementById('site-header');
+      const onScroll = () => {
+        header.classList.toggle('scrolled', window.scrollY > 40);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+      reveals.forEach(el => observer.observe(el));
+    </script>
+
   </body>
 </html>
