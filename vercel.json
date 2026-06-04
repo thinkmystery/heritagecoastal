@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/platform",
+      "destination": "https://boca-dashboard-eight.vercel.app",
+      "permanent": false
+    }
+  ]
+}
